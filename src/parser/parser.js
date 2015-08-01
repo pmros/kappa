@@ -249,7 +249,7 @@ var Parser = k.parser.Parser = (function() {
 						this.stack.slice(-1 * (rule.tail.length + 1), this.stack.length - 1);
 		reduceFunctionParameters.values = k.utils.obj.map(stackRange, function (stackItem)
 		{
-			return stackItem.currentValue || stackItem.symbol;
+			return stackItem.currentValue;
 		});
 		reduceFunctionParameters.ignoredStrings = k.utils.obj.map(stackRange, function (stackItem)
 		{
@@ -266,7 +266,7 @@ var Parser = k.parser.Parser = (function() {
 		//Update last stack item
 		lastItem = this.stack[this.stack.length - 1];
 		lastItem.symbol = rule.head;
-		lastItem.currentValue = k.utils.obj.isFunction(rule.reduceFunc) ? (rule.reduceFunc.call(this, reduceFunctionParameters) || lastItem.symbol) : lastItem.symbol;
+		lastItem.currentValue = k.utils.obj.isFunction(rule.reduceFunc) ? rule.reduceFunc.call(this, reduceFunctionParameters) : lastItem.symbol;
 
 
 		// Update/Generate AST
